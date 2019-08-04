@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
 import './App.css';
-import styled, {css} from 'styled-components'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import styled from 'styled-components'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-// import DatePicker from 'react-date-picker/dist/entry.nostyle';
-import DatePicker from "react-date-picker";
-import { makeStyles } from '@material-ui/core/styles';
+
 
 const QuoteHistory = styled.div`
     padding-top: 5%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 `;
+
+
 
 class QuoteForm extends Component{
 
@@ -23,13 +22,6 @@ class QuoteForm extends Component{
         date: new Date(),
     };
 
-
-    onChange = date => this.setState({ date });
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
-
     constructor(props) {
         super(props);
         this.state={
@@ -37,11 +29,27 @@ class QuoteForm extends Component{
             address: '',
             price: '',
             total: '',
+            apiResponse: '',
         }
     }
 
-    render() {
+    callAPI() {
+        fetch("http://localhost:9000/testAPI")
+            .then(res => res.text())
+            .then(res => this.setState({ apiResponse: res }));
+    }
 
+    componentWillMount() {
+        this.callAPI();
+    }
+
+
+    getPrice(){
+        pricingModule();
+        totalPrice();
+    }
+
+    render() {
         return (
 
             <div>
@@ -59,27 +67,29 @@ class QuoteForm extends Component{
                     <TextField
                         hintfText="How many Gallons?"
                         floatingLabelText="Gallons"
-                        required
+                        required={true}
                         id="standard-required"
                         type="number"
                         onChange ={(newValue => this.setState({gallons:newValue}))} />
                     <br/>
                     <TextField
                         hintfText="Delivery Address"
-                        floatingLabelText="Delivery Address"
-
-                        InputProps={{
-                            ReadOnly: true,
+                        disabled={true}
+                        label="Delivery Address"
+                        shrink={true}
+                        InputLabelProps={{
+                            shrink: true,
                         }}
+                        defaultValue={this.state.apiResponse}
                          />
 
                     <br/>
                         <TextField
                             id="date"
                             floatingLabelText="Delivery Date"
-                            label="Delivery Date"
                             type="date"
-                            defaultValue="2017-05-24"
+                            defaultValue="2019-08-04"
+                            required={true}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -87,27 +97,19 @@ class QuoteForm extends Component{
                     <br/>
                     <TextField
                         hintfText="Suggested Price"
-                        floatingLabelText="Suggested Price"
-                        id="standard-read-only-input"
-
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        type="number"
-                        onChange ={(newValue => this.setState({price:newValue}))} />
+                        disabled={true}
+                        defaultValue={this.state.price}
+                         />
                     <br/>
                     <TextField
                         hintfText="Total Amount Due"
-                        floatingLabelText="Total Amount Due"
+                        disabled={true}
+                        defaultValue={this.state.total} />
+                    <br/>
+                    <br/>
+                        <RaisedButton label="Get Price" disabled={false} primary={true} style={style} onClick={(event) => this.getPrice(event)}/>
+                        <RaisedButton label="Submit" disabled={false} primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        type="number"
-                        onChange ={(newValue => this.setState({total:newValue}))} />
-                    <br/>
-                    <br/>
-                        <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
                     </div>
 
                 </QuoteHistory>

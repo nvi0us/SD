@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import './App.css';
-import styled, {css} from 'styled-components'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import styled from 'styled-components'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+
 
 
 const QuoteHistory = styled.div`
@@ -18,11 +18,26 @@ class History extends Component{
 
 
 
+   /* constructor(props) {
+        super(props);
+    }*/
     constructor(props) {
         super(props);
+        this.state = { apiResponse: "" };
+    }
+
+    callAPI() {
+        fetch("http://localhost:9000/testAPI")
+            .then(res => res.text())
+            .then(res => this.setState({ apiResponse: res }));
+    }
+
+    componentWillMount() {
+        this.callAPI();
     }
 
     render() {
+
         return (
 
             <div>
@@ -31,6 +46,7 @@ class History extends Component{
                   <AppBar
                       title="Fuel Quote History"
                   />
+                    <p className="App-intro">{this.state.apiResponse}</p>
                 </div>
                 <QuoteHistory>
                     <br/>
@@ -45,7 +61,10 @@ class History extends Component{
                                 shrink: true,
                             }}
                         />
-                    <table>
+
+                        <RaisedButton label="Enter" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+
+                        <table>
                         <div>
                         <thead>
                         <tr>
@@ -75,5 +94,7 @@ class History extends Component{
         );
     }
 }
-
+const style = {
+    margin: 15,
+};
 export default History;
