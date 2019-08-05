@@ -27,6 +27,9 @@ class QuoteForm extends Component{
         this.state={
             gallons: '',
             address: '',
+            state: '',
+            date: '',
+            month: '',
             price: '',
             total: '',
             apiResponse: '',
@@ -93,18 +96,27 @@ class QuoteForm extends Component{
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            onChange ={(newValue => this.setState({date:newValue}))}
                         />
                     <br/>
                     <TextField
                         hintfText="Suggested Price"
                         disabled={true}
-                        defaultValue={this.state.price}
+                        defaultValue={<% if(data.length){ 
+                          <%=data[i].price%>
+                          <% }}}else{ %>
+                          <%="Suggested Price"%>    
+                          <% } %>
                          />
                     <br/>
                     <TextField
                         hintfText="Total Amount Due"
                         disabled={true}
-                        defaultValue={this.state.total} />
+                        defaultValue={<% if(data.length){ 
+                          <%=data[i].total%>
+                          <% }}}else{ %>
+                          <%="Total Price"%>    
+                          <% } %> />
                     <br/>
                     <br/>
                         <RaisedButton label="Get Price" disabled={false} primary={true} style={style} onClick={(event) => this.getPrice(event)}/>
