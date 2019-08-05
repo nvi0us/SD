@@ -17,25 +17,6 @@ const QuoteHistory = styled.div`
 class History extends Component{
 
 
-
-   /* constructor(props) {
-        super(props);
-    }*/
-    constructor(props) {
-        super(props);
-        this.state = { apiResponse: "" };
-    }
-
-    callAPI() {
-        fetch("http://localhost:9000/testAPI")
-            .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }));
-    }
-
-    componentWillMount() {
-        this.callAPI();
-    }
-
     render() {
 
         return (
@@ -46,7 +27,6 @@ class History extends Component{
                   <AppBar
                       title="Fuel Quote History"
                   />
-                    <p className="App-intro">{this.state.apiResponse}</p>
                 </div>
                 <QuoteHistory>
                     <br/>
