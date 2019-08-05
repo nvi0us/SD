@@ -31,25 +31,8 @@ class QuoteForm extends Component{
             date: '',
             month: '',
             price: '',
-            total: '',
-            apiResponse: '',
+            total: '',       
         }
-    }
-
-    callAPI() {
-        fetch("http://localhost:9000/testAPI")
-            .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }));
-    }
-
-    componentWillMount() {
-        this.callAPI();
-    }
-
-
-    getPrice(){
-        pricingModule();
-        totalPrice();
     }
 
     render() {
@@ -102,25 +85,35 @@ class QuoteForm extends Component{
                     <TextField
                         hintfText="Suggested Price"
                         disabled={true}
-                        defaultValue={<% if(data.length){ 
+                        defaultValue={<% if(data.length){ %>
                           <%=data[i].price%>
                           <% }}}else{ %>
-                          <%="Suggested Price"%>    
+                              "Suggested Price"    
                           <% } %>
                          />
                     <br/>
                     <TextField
                         hintfText="Total Amount Due"
                         disabled={true}
-                        defaultValue={<% if(data.length){ 
+                        defaultValue={<% if(data.length){ %>
                           <%=data[i].total%>
                           <% }}}else{ %>
-                          <%="Total Price"%>    
+                              "Total Price"   
                           <% } %> />
                     <br/>
                     <br/>
-                        <RaisedButton label="Get Price" disabled={false} primary={true} style={style} onClick={(event) => this.getPrice(event)}/>
-                        <RaisedButton label="Submit" disabled={false} primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+                        <RaisedButton label="Get Price" disabled={ if (this.state.date === '' or this.state.gallons === ''){
+                            true}
+                            else{
+                            false                                                                       
+                            }} 
+                        primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+                        <RaisedButton label="Submit" disabled={ if (this.state.date === '' or this.state.gallons === ''){
+                            true}
+                            else{
+                            false                                                                       
+                            }}  
+                        primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
                     </div>
 
