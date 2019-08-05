@@ -87,7 +87,11 @@ class History extends Component{
                             <td><%=data[i].total></td>
                           </tr>
                           <% }
-                          }
+                              }else{ %>
+                              <tr>
+                                <td colspan="5">No Previous Fuel History</td>
+                              </tr>
+                            <% } %>
                         </tbody>
                         </div>
                     </table>
