@@ -97,8 +97,8 @@ exports.quotes = function(req,res){
 };
 
 
-router.get('/FuelQuote', function(req, res) {
+app.get('/FuelQuote', function(req, res) {
     res.send(pricingModule());
 });
 
-module.exports = router;
+module.exports = app;
