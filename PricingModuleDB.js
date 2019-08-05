@@ -17,7 +17,7 @@ var suggestedPrice  = 0;
 var total = 0;
 exports.pricingModule = function(req,rew){
     var username = req.body.username;
-    connection.query('SELECT * FROM quoteTable WHERE username = ?',[username], function (error, results, fields){
+    connection.query('SELECT * FROM quotes WHERE username = ?',[username], function (error, results, fields){
         if (error){
             res.send({
                 "failed": "error occurred"
