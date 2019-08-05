@@ -76,10 +76,18 @@ class History extends Component{
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="5" >Populated by Database</td>
-                        </tr>
-
+                          <% if(data.length){ 
+                            for(var i = 0;i < data.length;i++) { %>
+                          <tr>
+                            <td><%=(i+1)%></td>
+                            <td><%=data[i].gallons></td>
+                            <td><%=data[i].address></td>
+                            <td><%=data[i].date></td>
+                            <td><%=data[i].price></td>
+                            <td><%=data[i].total></td>
+                          </tr>
+                          <% }
+                          }
                         </tbody>
                         </div>
                     </table>
